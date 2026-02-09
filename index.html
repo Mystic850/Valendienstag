@@ -21,8 +21,16 @@
             align-items: center;
             min-height: 100vh;
             font-family: 'Georgia', serif;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             position: relative;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                min-height: auto;
+                padding: 20px 0;
+            }
         }
 
         body::before {
@@ -102,8 +110,9 @@
 
         @media (max-width: 768px) {
             .container {
-                gap: 40px;
-                padding: 15px;
+                gap: 25px;
+                padding: 20px 15px;
+                margin: 20px 0;
             }
         }
 
@@ -122,7 +131,7 @@
 
         @media (max-width: 768px) {
             canvas {
-                max-width: 320px;
+                max-width: 280px;
                 box-shadow: 0 20px 60px rgba(230, 57, 70, 0.15);
             }
         }
@@ -278,7 +287,7 @@
     <div class="floating-hearts" id="floatingHearts"></div>
     
     <div class="container">
-        <canvas id="heartCanvas" width="450" height="450"></canvas>
+        <canvas id="heartCanvas"></canvas>
         
         <div class="header">
             <h1>Willst du mein Valentin sein?</h1>
@@ -295,6 +304,23 @@
     </div>
 
     <script>
+        // Canvas responsive machen
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            const isMobile = window.innerWidth <= 768;
+            const size = isMobile ? 260 : 450;
+            canvas.width = size;
+            canvas.height = size;
+            // Herz neu zeichnen nach Größenänderung
+            progress = 0;
+            drawHeart();
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
         // Schwebende Herzen erstellen
         function createFloatingHearts() {
             const container = document.getElementById('floatingHearts');
@@ -318,10 +344,6 @@
         // Kontinuierlich schwebende Herzen
         createFloatingHearts();
         setInterval(createFloatingHearts, 9500);
-
-        // Herz zeichnen
-        const canvas = document.getElementById('heartCanvas');
-        const ctx = canvas.getContext('2d');
 
         function hearta(k) {
             return 15 * Math.pow(Math.sin(k), 3);

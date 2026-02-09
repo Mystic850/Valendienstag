@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Valentinstag</title>
     <style>
         * {
@@ -135,15 +135,22 @@
                         0 0 50px rgba(230, 57, 70, 0.08);
             backdrop-filter: blur(5px);
             border: none;
-            width: 100%;
+            width: auto;
             height: auto;
             max-width: 450px;
+            position: relative;
+            z-index: 15;
         }
 
         @media (max-width: 768px) {
             canvas {
-                max-width: 280px;
+                display: block !important;
+                width: auto;
+                height: auto;
+                max-width: 90vw;
+                max-height: 90vw;
                 box-shadow: 0 20px 60px rgba(230, 57, 70, 0.15);
+                z-index: 15;
             }
         }
 
@@ -223,12 +230,13 @@
 
         @media (max-width: 768px) {
             button {
-                padding: 14px 38px;
+                padding: 16px 40px;
                 font-size: 18px;
                 letter-spacing: 1px;
-                min-width: 120px;
-                min-height: 50px;
+                min-width: 130px;
+                min-height: 55px;
                 z-index: 20;
+                border: 2px solid #d4847d;
             }
 
             button:active {
@@ -305,7 +313,7 @@
     <div class="floating-hearts" id="floatingHearts"></div>
     
     <div class="container">
-        <canvas id="heartCanvas"></canvas>
+        <canvas id="heartCanvas" width="450" height="450"></canvas>
         
         <div class="header">
             <h1>Willst du mein Valentin sein?</h1>
@@ -322,23 +330,6 @@
     </div>
 
     <script>
-        // Canvas responsive machen
-        const canvas = document.getElementById('heartCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        function resizeCanvas() {
-            const isMobile = window.innerWidth <= 768;
-            const size = isMobile ? 260 : 450;
-            canvas.width = size;
-            canvas.height = size;
-            // Herz neu zeichnen nach Größenänderung
-            progress = 0;
-            drawHeart();
-        }
-        
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
         // Schwebende Herzen erstellen
         function createFloatingHearts() {
             const container = document.getElementById('floatingHearts');
@@ -363,6 +354,10 @@
         createFloatingHearts();
         setInterval(createFloatingHearts, 9500);
 
+        // Herz zeichnen
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+
         function hearta(k) {
             return 15 * Math.pow(Math.sin(k), 3);
         }
@@ -378,7 +373,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.strokeStyle = '#e63946';
             ctx.fillStyle = 'rgba(230, 57, 70, 0.15)';
-            ctx.lineWidth = 3.5;
+            ctx.lineWidth = 3;
 
             const currentSteps = Math.floor(progress * maxSteps);
 

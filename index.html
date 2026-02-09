@@ -35,14 +35,14 @@
 
         body::before {
             content: '';
-            position: fixed;
-            width: 200%;
-            height: 200%;
+            position: absolute;
+            width: 100%;
+            height: 100%;
             background: radial-gradient(circle at 20% 50%, rgba(255, 182, 193, 0.08) 0%, transparent 50%),
                         radial-gradient(circle at 80% 80%, rgba(255, 192, 203, 0.06) 0%, transparent 50%);
             animation: shimmer 8s ease-in-out infinite;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
         }
 
         @keyframes shimmer {
@@ -64,7 +64,7 @@
             top: 0;
             left: 0;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
         }
 
         .floating-heart {
@@ -113,6 +113,7 @@
                 gap: 25px;
                 padding: 20px 15px;
                 margin: 20px 0;
+                pointer-events: auto;
             }
         }
 
@@ -194,6 +195,8 @@
                         0 0 40px rgba(212, 132, 125, 0.08),
                         inset 0 1px 0 rgba(255, 255, 255, 1);
             backdrop-filter: blur(18px);
+            position: relative;
+            z-index: 20;
         }
 
         button:hover {
@@ -211,6 +214,7 @@
                 letter-spacing: 1px;
                 min-width: 120px;
                 min-height: 50px;
+                z-index: 20;
             }
 
             button:active {
